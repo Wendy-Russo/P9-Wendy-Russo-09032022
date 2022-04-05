@@ -5,7 +5,8 @@ import LoadingPage from "./LoadingPage.js"
 import Actions from './Actions.js'
 
 const row = (bill) => {
-  return (`
+  if(bill.amount){
+    return (`
     <tr>
       <td>${bill.type}</td>
       <td>${bill.name}</td>
@@ -18,6 +19,7 @@ const row = (bill) => {
     </tr>
     `)
   }
+}
 
 const rows = (data) => {
   return (data && data.length) ? data.map(bill => row(bill)).join("") : ""

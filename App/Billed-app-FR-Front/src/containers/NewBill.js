@@ -10,36 +10,65 @@ export default class NewBill {
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
     file.addEventListener("change", this.handleChangeFile)
+
     this.fileUrl = null
     this.fileName = null
     this.billId = null
+
     new Logout({ document, localStorage, onNavigate })
   }
+
   handleChangeFile = e => {
+
     e.preventDefault()
+
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+    console.log("file",file)
+
+    const fileInput = this.document.querySelector(`input[data-testid="file"]`);
+    console.log("fileInput",fileInput)
+
     const filePath = e.target.value.split(/\\/g)
+    console.log("filePath",filePath)
+
     const fileName = filePath[filePath.length-1]
+    console.log("fileName",fileName)
+
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+
+    if(!allowedExtensions.exec(fileName)){
+      alert("File not valid");
+      fileInput.value = fileInput.defaultValue;
+    }
+
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
+
     formData.append('file', file)
     formData.append('email', email)
 
     this.store
       .bills()
+
       .create({
         data: formData,
         headers: {
           noContentType: true
         }
       })
+
       .then(({fileUrl, key}) => {
         console.log(fileUrl)
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
-      }).catch(error => console.error(error))
+      })
+      .catch(error => console.error(error))
   }
+
+
+
+
   handleSubmit = e => {
     e.preventDefault()
     console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)

@@ -10,7 +10,6 @@ import { formatDate } from "../app/format";
 
 describe("Given that I am a user on login page", () => {
   describe("When I do not fill fields and I click on employee button Login In", () => {
-
     test("Then It should renders Login page", () => {
       document.body.innerHTML = LoginUI();
 
@@ -30,7 +29,6 @@ describe("Given that I am a user on login page", () => {
   });
 
   describe("When I do fill fields in incorrect format and I click on employee button Login In", () => {
-
     test("Then It should renders Login page", () => {
       document.body.innerHTML = LoginUI();
 
@@ -52,7 +50,6 @@ describe("Given that I am a user on login page", () => {
   });
 
   describe("When I do fill fields in correct format and I click on employee button Login In", () => {
-
     test("Then I should be identified as an Employee in app", () => {
 
       document.body.innerHTML = LoginUI();
@@ -112,8 +109,6 @@ describe("Given that I am a user on login page", () => {
 
       form.addEventListener("submit", handleSubmit);
 
-      console.log(fireEvent.submit(form));
-
       fireEvent.submit(form);
 
       expect(handleSubmit).toHaveBeenCalled();
@@ -138,8 +133,6 @@ describe("Given that I am a user on login page", () => {
 
 describe("Given that I am a user on login page", () => {
   describe("When I do not fill fields and I click on admin button Login In", () => {
-
-
     test("Then It should renders Login page", () => {
       document.body.innerHTML = LoginUI();
 
@@ -160,7 +153,6 @@ describe("Given that I am a user on login page", () => {
   });
 
   describe("When I do fill fields in incorrect format and I click on admin button Login In", () => {
-
     test("Then it should renders Login page", () => {
       document.body.innerHTML = LoginUI();
 
@@ -182,7 +174,6 @@ describe("Given that I am a user on login page", () => {
   });
 
   describe("When I do fill fields in correct format and I click on admin button Login In", () => {
-
     test("Then I should be identified as an HR admin in app", () => {
 
       document.body.innerHTML = LoginUI();
@@ -242,13 +233,9 @@ describe("Given that I am a user on login page", () => {
 
       form.addEventListener("submit", handleSubmit);
 
-      console.log(fireEvent.submit(form));
-
       fireEvent.submit(form);
 
-
       expect(handleSubmit).toHaveBeenCalled();
-      console.log(0)
       expect(window.localStorage.setItem).toHaveBeenCalled();
       expect(window.localStorage.setItem).toHaveBeenCalledWith(
         "user",

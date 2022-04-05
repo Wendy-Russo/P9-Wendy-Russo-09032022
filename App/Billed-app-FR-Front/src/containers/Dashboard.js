@@ -6,6 +6,7 @@ import USERS_TEST from '../constants/usersTest.js'
 import Logout from "./Logout.js"
 
 export const filteredBills = (data, status) => {
+  console.log("filteredBills")
   return (data && data.length) ?
     data.filter(bill => {
       let selectCondition
@@ -28,6 +29,7 @@ export const filteredBills = (data, status) => {
 }
 
 export const card = (bill) => {
+  console.log("card")
   const firstAndLastNames = bill.email.split('@')[0]
   const firstName = firstAndLastNames.includes('.') ?
     firstAndLastNames.split('.')[0] : ''
@@ -53,10 +55,12 @@ export const card = (bill) => {
 }
 
 export const cards = (bills) => {
+  console.log("cards")
   return bills && bills.length ? bills.map(bill => card(bill)).join("") : ""
 }
 
 export const getStatus = (index) => {
+  console.log("getStatus")
   switch (index) {
     case 1:
       return "pending"
@@ -69,9 +73,11 @@ export const getStatus = (index) => {
 
 export default class {
   constructor({ document, onNavigate, store, bills, localStorage }) {
+
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
+
     $('#arrow-icon1').click((e) => this.handleShowTickets(e, bills, 1))
     $('#arrow-icon2').click((e) => this.handleShowTickets(e, bills, 2))
     $('#arrow-icon3').click((e) => this.handleShowTickets(e, bills, 3))
@@ -79,24 +85,41 @@ export default class {
   }
 
   handleClickIconEye = () => {
+    console.log(-4)
     const billUrl = $('#icon-eye-d').attr("data-bill-url")
-    const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8)
+    const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8);
+    console.log(document.getElementById("modaleFileAdmin1").width);
+    //const imgWidth2 = Math.floor(document.getElementById("#modaleFileAdmin1").firstElementChild.width() * 0.8);
+
     $('#modaleFileAdmin1').find(".modal-body").html(`<div style='text-align: center;'><img width=${imgWidth} src=${billUrl} alt="Bill"/></div>`)
     if (typeof $('#modaleFileAdmin1').modal === 'function') $('#modaleFileAdmin1').modal('show')
   }
 
   handleEditTicket(e, bill, bills) {
-    if (this.counter === undefined || this.id !== bill.id) this.counter = 0
-    if (this.id === undefined || this.id !== bill.id) this.id = bill.id
+    console.log("handleEditTicket")
+    if (this.counter === undefined || this.id !== bill.id){
+      this.counter = 0
+    }
+
+    if (this.id === undefined || this.id !== bill.id){
+      this.id = bill.id
+    }
+
     if (this.counter % 2 === 0) {
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
       })
+
       $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
+
       $('.dashboard-right-container div').html(DashboardFormUI(bill))
+
       $('.vertical-navbar').css({ height: '150vh' })
+
       this.counter ++
-    } else {
+    }
+    else
+    {
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
 
       $('.dashboard-right-container div').html(`
@@ -105,12 +128,14 @@ export default class {
       $('.vertical-navbar').css({ height: '120vh' })
       this.counter ++
     }
+
     $('#icon-eye-d').click(this.handleClickIconEye)
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
     $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
   }
 
   handleAcceptSubmit = (e, bill) => {
+    console.log(-2)
     const newBill = {
       ...bill,
       status: 'accepted',
@@ -121,6 +146,7 @@ export default class {
   }
 
   handleRefuseSubmit = (e, bill) => {
+    console.log(-1)
     const newBill = {
       ...bill,
       status: 'refused',
@@ -131,22 +157,37 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
-    if (this.counter === undefined || this.index !== index) this.counter = 0
-    if (this.index === undefined || this.index !== index) this.index = index
-    if (this.counter % 2 === 0) {
-      $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})
-      $(`#status-bills-container${this.index}`)
-        .html(cards(filteredBills(bills, getStatus(this.index))))
-      this.counter ++
-    } else {
-      $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
-      $(`#status-bills-container${this.index}`)
-        .html("")
-      this.counter ++
+    console.log(0)
+
+    if (this.counter === undefined || this.index !== index) {
+      console.log("0a counter to 0")
+      this.counter = 0;
     }
 
-    bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+    if (this.index === undefined || this.index !== index) {
+      console.log("0b")
+      this.index = index;
+    }
+
+    if (this.counter % 2 === 0) {
+      console.log("c")
+      $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'});
+
+      $(`#status-bills-container${this.index}`).html(cards(filteredBills(bills, getStatus(this.index))));
+
+      this.counter ++;
+    }
+    else
+    {
+      console.log("d")
+      $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'});
+      $(`#status-bills-container${this.index}`).html("");
+      this.counter ++;
+    }
+
+    filteredBills(bills, getStatus(this.index)).forEach(bill => {
+      console.log("e")
+      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills));
     })
 
     return bills
@@ -154,6 +195,7 @@ export default class {
   }
 
   getBillsAllUsers = () => {
+    console.log(1)
     if (this.store) {
       return this.store
       .bills()
@@ -177,6 +219,7 @@ export default class {
   // not need to cover this function by tests
   /* istanbul ignore next */
   updateBill = (bill) => {
+    console.log(2)
     if (this.store) {
     return this.store
       .bills()

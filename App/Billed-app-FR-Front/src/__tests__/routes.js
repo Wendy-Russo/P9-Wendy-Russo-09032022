@@ -18,9 +18,9 @@ describe('Given I am connected and I am on some page of the app', () => {
         data,
         loading,
         error
-       })
-       document.body.innerHTML = html
-       expect(screen.getAllByText('Administration')).toBeTruthy()
+      })
+      document.body.innerHTML = html
+      expect(screen.getAllByText('Administration')).toBeTruthy()
     })
   })
   describe('When I navigate to Bills page', () => {
@@ -31,9 +31,9 @@ describe('Given I am connected and I am on some page of the app', () => {
         data,
         loading,
         error
-       })
-       document.body.innerHTML = html
-       expect(screen.getAllByText('Mes notes de frais')).toBeTruthy()
+      })
+      document.body.innerHTML = html
+      expect(screen.getAllByText('Mes notes de frais')).toBeTruthy()
     })
   })
   describe('When I navigate to NewBill page', () => {
@@ -44,9 +44,9 @@ describe('Given I am connected and I am on some page of the app', () => {
         data,
         loading,
         error
-       })
-       document.body.innerHTML = html
-       expect(screen.getAllByText('Envoyer une note de frais')).toBeTruthy()
+      })
+      document.body.innerHTML = html
+      expect(screen.getAllByText('Envoyer une note de frais')).toBeTruthy()
     })
   })
   describe('When I navigate to Dashboard', () => {
@@ -57,9 +57,9 @@ describe('Given I am connected and I am on some page of the app', () => {
         data,
         loading,
         error
-       })
-       document.body.innerHTML = html
-       expect(screen.getAllByText('Validations')).toBeTruthy()
+      })
+      document.body.innerHTML = html
+      expect(screen.getAllByText('Validations')).toBeTruthy()
     })
   })
   describe('When I navigate to anywhere else other than Login, Bills, NewBill, Dashboard', () => {
@@ -70,9 +70,9 @@ describe('Given I am connected and I am on some page of the app', () => {
         data,
         loading,
         error
-       })
-       document.body.innerHTML = html
-       expect(screen.getAllByText('Administration')).toBeTruthy()
+      })
+      document.body.innerHTML = html
+      expect(screen.getAllByText('Administration')).toBeTruthy()
     })
   })
 })

@@ -49,7 +49,7 @@ export default ({ data: bills, loading, error }) => {
   } else if (error) {
     return ErrorPage(error)
   }
-  if(bills !== undefined){
+  if(bills !== undefined && bills.length > 1){
     bills = bills.sort((a, b) => ((a.date > b.date) ? 1 : -1))
   }
 

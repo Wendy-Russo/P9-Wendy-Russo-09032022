@@ -14,3 +14,6 @@ export default (error) => {
     </div>`
   )
 }
+
+
+/*error ? error : ""*/

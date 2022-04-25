@@ -123,8 +123,8 @@ describe("Given I am connected as an employee", () => {
 
 //test Get
 
-describe("Given I am a user connected as Employee", () => {
-  describe("When i navigate to Bills", () => {
+describe("Given I am a user connected as Admin", () => {
+  describe("When I navigate to Dashboard", () => {
     test("fetches bills from mock API GET", async () => {
 
       localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "a@a" }));
@@ -136,74 +136,61 @@ describe("Given I am a user connected as Employee", () => {
       router();
       window.onNavigate(ROUTES_PATH.Bills);
 
-      const billsTable = screen.getByTestId("tbody");
-      expect(billsTable).toBeTruthy();
-
-      expect(billsTable.childElementCount).toBeGreaterThan(0);
-      //await waitFor(() => screen.getByText("Validations"));
-
-      //const contentPending  = await screen.getByText("En attente (1)");
-      //expect(contentPending).toBeTruthy();
-
-      //const contentRefused  = await screen.getByText("Refusé (2)");
-      //expect(contentRefused).toBeTruthy();
-
-      //expect(screen.getByTestId("big-billed-icon")).toBeTruthy();
+      expect(screen.getByTestId("tbody")).toBeTruthy();
 
     })
-  });
-  describe("When an error occurs on API", () => {
 
-    beforeEach(() => {
-      jest.spyOn(mockStore, "bills");
-      Object.defineProperty(
-          window,
-          'localStorage',
-          { value: localStorageMock }
-      );
-      window.localStorage.setItem('user', JSON.stringify({
-        type: 'Employee',
-        email: "a@a"
-      }));
-      const root = document.createElement("div");
-      root.setAttribute("id", "root");
-      document.body.appendChild(root);
-      router();
+
+    describe("When an error occurs on API", () => {
+      beforeEach(() => {
+        jest.spyOn(mockStore, "bills")
+        Object.defineProperty(
+            window,
+            'localStorage',
+            { value: localStorageMock }
+        )
+        window.localStorage.setItem('user', JSON.stringify({
+          type: 'Admin',
+          email: "a@a"
+        }))
+        const root = document.createElement("div")
+        root.setAttribute("id", "root")
+        document.body.appendChild(root)
+        router()
+      })
+
+      test("fetches bills from an API and fails with 404 message error", async () => {
+
+        mockStore.bills.mockImplementationOnce(() => {
+          return {
+            list : () =>  {
+              return Promise.reject(new Error("Erreur 404"))
+            }
+          }})
+        window.onNavigate(ROUTES_PATH.Dashboard)
+        await new Promise(process.nextTick);
+        const message = await screen.getByText(/Erreur 404/)
+        expect(message).toBeTruthy()
+      })
+
+      test("fetches messages from an API and fails with 500 message error", async () => {
+
+        mockStore.bills.mockImplementationOnce(() => {
+          return {
+            list : () =>  {
+              return Promise.reject(new Error("Erreur 500"))
+            }
+          }})
+
+        window.onNavigate(ROUTES_PATH.Dashboard)
+        await new Promise(process.nextTick);
+        const message = await screen.getByText(/Erreur 500/)
+        expect(message).toBeTruthy()
+      })
     })
-
-    test("fetches bills from an API and fails with 404 message error", async () => {
-
-      mockStore.bills.mockImplementationOnce(() => {
-        return {
-          list : () =>  {
-            return Promise.reject(new Error("Erreur 404"))
-          }
-        }})
-
-      window.onNavigate(ROUTES_PATH.Bills)
-
-      await new Promise(process.nextTick);
-
-      const message = await screen.getByText(/Erreur 404/)
-      expect(message).toBeTruthy()
-    })
-
-    /*test("fetches messages from an API and fails with 500 message error", async () => {
-
-      mockStore.bills.mockImplementationOnce(() => {
-        return {
-          list : () =>  {
-            return Promise.reject(new Error("Erreur 500"))
-          }
-        }})
-
-      window.onNavigate(ROUTES_PATH.Dashboard)
-      await new Promise(process.nextTick);
-      const message = await screen.getByText(/Erreur 500/)
-      expect(message).toBeTruthy()
-    })*/
 
   })
-});
+})
+
 
 //describe("", () => {});

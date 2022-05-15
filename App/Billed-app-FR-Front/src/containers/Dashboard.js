@@ -179,7 +179,8 @@ export default class {
 
   }
 
-  getBillsAllUsers = () => {
+  getBillsAllUsers = () => { //CEST LUI QUI BEUG JE CROIS
+
     if (this.store) {
       return this.store
       .bills()

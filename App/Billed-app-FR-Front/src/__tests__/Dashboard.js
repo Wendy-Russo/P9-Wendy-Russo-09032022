@@ -252,6 +252,7 @@ describe("Given I am a user connected as Admin", () => {
       document.body.append(root);
 
       router();
+
       window.onNavigate(ROUTES_PATH.Dashboard);
 
       await waitFor(() => screen.getByText("Validations"));
@@ -267,6 +268,7 @@ describe("Given I am a user connected as Admin", () => {
     })
     describe("When an error occurs on API", () => {
       beforeEach(() => {
+
         jest.spyOn(mockStore, "bills")
         Object.defineProperty(
             window,
@@ -277,11 +279,13 @@ describe("Given I am a user connected as Admin", () => {
           type: 'Admin',
           email: "a@a"
         }))
+
         const root = document.createElement("div")
         root.setAttribute("id", "root")
         document.body.appendChild(root)
         router()
       })
+
       test("fetches bills from an API and fails with 404 message error", async () => {
 
         mockStore.bills.mockImplementationOnce(() => {

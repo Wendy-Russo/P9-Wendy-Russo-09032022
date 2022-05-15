@@ -17,6 +17,8 @@ export const ROUTES = ({ pathname, data, error, loading }) => {
       return LoginUI({ data, error, loading })
 
     case ROUTES_PATH["Bills"]:
+      //test = BillsUI({ data, error, loading });
+      //console.log(test.error);
       return BillsUI({ data, error, loading })
 
       case ROUTES_PATH["NewBill"]:

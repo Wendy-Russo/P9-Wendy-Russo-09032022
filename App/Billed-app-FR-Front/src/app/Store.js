@@ -39,6 +39,7 @@ class ApiEntity {
     return await (this.api.get({url: `/${this.key}/${selector}`, headers: getHeaders(headers)}))
   }
   async list({headers = {}} = {}) {
+    //console.log("zndd");
     return await (this.api.get({url: `/${this.key}`, headers: getHeaders(headers)}))
   }
   async update({data, selector, headers = {}}) {

@@ -89,5 +89,23 @@ export default {
     return mockedBills
     //return {}
   },
-}
 
+  get: () => {
+    const billsList = mockedBills.list();
+    return Promise.resolve({
+      data: [...billsList]
+    })
+  },
+
+  post: async (newBill) => {
+    const billsList = await mockedBills.list();
+    if(newBill !== null){
+      return Promise.resolve({
+        data: [...billsList, newBill]
+      })
+    }
+    return Promise.resolve({
+      data: [...billsList]
+    })
+  }
+}

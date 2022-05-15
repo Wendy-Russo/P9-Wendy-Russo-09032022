@@ -56,13 +56,14 @@ export default () => {
                   <div class="col-half">
                     <label for="file" class="bold-label">Justificatif</label>
                     <input required type="file" accept=".png, .jpg, .jpeg" class="form-control blue-border" data-testid="file" />
+                    <p id=" " class="text-danger p-1 font-weight-bold d-none" data-testid="file-error-message">Error : Allowed file extentions are .png, .jpg and .jpeg</p>
                   </div>
                 </div>
             </div>
             <div class="row">
               <div class="col-md-6">
                 <div class="col-half">
-                  <button type="submit" id='btn-send-bill' class="btn btn-primary">Envoyer</button>
+                  <button type="submit" id='btn-send-bill' data-testid='btn-send-bill' class="btn btn-primary">Envoyer</button>
                 </div>
               </div>
             </div>
